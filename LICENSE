@@ -1,0 +1,133 @@
+Non-Commercial Share-Alike Software License (NCSL-1.0)
+
+Version 1.0 — © 2025, Roman Gorkusha / Karroplan
+
+1. Permissions
+
+This software and its source code may be used free of charge for non-commercial purposes, including but not limited to:
+
+Running and using the software;
+
+Studying and analyzing its source code and behavior;
+
+Copying and redistributing the software (both source and binary forms);
+
+Modifying the source code and creating derivative works.
+
+2. Conditions for Non-Commercial Use
+
+When using, modifying, or redistributing this software for non-commercial purposes, you must comply with the following conditions:
+
+Attribution – You must retain the original author’s name and this license text in all copies or substantial portions of the software.
+
+Share-Alike – Any modified or derivative version of the software must be distributed under this same license (NCSL-1.0).
+
+Non-Commercial Only – You may not use this software or its derivatives for any commercial purpose without prior written permission from the author.
+
+3. Commercial Use
+
+Any use of this software for commercial purposes — including but not limited to:
+
+Selling, licensing, renting, or offering paid access to the software;
+
+Using the software as part of a commercial product or service;
+
+Deploying or using the software within an organization for profit-oriented activities — requires a separate commercial license agreement with the author.
+
+4. Disclaimer of Warranty
+
+This software is provided “as is”, without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+In no event shall the author be liable for any claim, damages, or other liability, whether in an action of contract, tort, or otherwise, arising from, out of, or in connection with the software or its use.
+
+5. Third-Party Components
+
+This software uses the OpenSSL 3.0 library, which is free and open-source software developed by the OpenSSL Project.
+OpenSSL is distributed under its own license terms, which are independent of this license.
+The terms of the OpenSSL license can be found at:
+🔗 https://www.openssl.org/source/license.html
+
+and the OpenSSL source code is available at:
+🔗 https://github.com/openssl/openssl
+
+Nothing in this license overrides or modifies the terms of the OpenSSL license.
+
+6. License Summary (Informative)
+
+You may:
+✅ Use, copy, modify, and share the software non-commercially.
+✅ Keep and credit the original author.
+✅ Re-license modifications only under NCSL-1.0.
+
+You may not:
+🚫 Use the software commercially without a separate license.
+🚫 Re-license it under any other terms.
+
+For commercial licensing inquiries, please contact the author at - roman.gorkusha@gmail.com, karroplan@gmail.com
+
+
+
+
+Лицензия «Non-Commercial Share-Alike Software License» (NCSL)
+
+Версия 1.0 — © 2025, Роман Горкуша / Karroplan
+
+1. Разрешения
+
+Настоящая лицензия позволяет любому лицу бесплатно использовать данное программное обеспечение и его исходные тексты в некоммерческих целях, включая:
+
+запуск и использование программы;
+
+изучение работы программы;
+
+распространение копий (исходных или скомпилированных);
+
+изменение исходного кода и создание производных версий.
+
+2. Условия некоммерческого использования
+
+При любом некоммерческом использовании должны соблюдаться следующие условия:
+
+Указание авторства — должно быть сохранено упоминание оригинального автора и текста настоящей лицензии.
+
+Та же лицензия — любые производные версии или модифицированные исходники должны распространяться только на условиях этой же лицензии (NCSL).
+
+Без коммерческого использования — использование программы (включая производные версии) в коммерческих целях без письменного разрешения автора запрещено.
+
+3. Коммерческое использование
+
+Любое коммерческое использование данного программного обеспечения, включая, но не ограничиваясь:
+
+продажу, аренду или платное предоставление доступа;
+
+включение в коммерческие продукты или сервисы;
+
+использование внутри организаций для извлечения прибыли —
+требует заключения отдельного лицензионного соглашения с автором.
+
+4. Отказ от гарантий
+
+Программное обеспечение предоставляется «как есть», без каких-либо гарантий, явных или подразумеваемых. Автор не несёт ответственности за любой ущерб, вызванный использованием программы.
+
+5. Сторонние компоненты
+
+Данное программное обеспечение использует библиотеку OpenSSL 3.0, которая является свободным программным обеспечением, разработанным проектом OpenSSL.
+OpenSSL распространяется на условиях собственной лицензии, независимой от настоящей лицензии.
+Условия лицензии OpenSSL доступны по адресу:
+🔗 https://www.openssl.org/source/license.html
+
+а исходный код OpenSSL размещён по адресу:
+🔗 https://github.com/openssl/openssl
+
+Ничто в настоящей лицензии не изменяет и не отменяет условий лицензии OpenSSL.
+
+6. Краткое изложение лицензии (информационно)
+Вы можете:
+✅ Использовать, копировать, изменять и распространять программу в некоммерческих целях.
+✅ Сохранять и указывать авторство.
+✅ Распространять модификации только под лицензией NCSL-1.0.
+
+Вы не можете:
+🚫 Использовать программу в коммерческих целях без отдельной лицензии.
+🚫 Распространять программу под другими условиями.
+
+Для коммерческих лицензий обращайтесь к автору по адресу - roman.gorkusha@gmail.com, karroplan@gmail.com

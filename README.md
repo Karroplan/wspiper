@@ -19,10 +19,15 @@ Websocket connection support ws and wss via OpenSSL.
 ``````
 
 One can do:
+
 `echo "{ 'message':'Hello, World'}\n" > /tmp/wsinpipe`
+
 JSON message will be read from in-pipe and delivered to a remote server via websocket-connection. Please, note `\n` at the end - `newline` is a default message delimiter by which **wspiper** detects messages in the in-pipe.
+
 Then server could respond with `"{ 'response': 'Weclcome fellow Piper!'}"` and one can issue:
+
 `cat /tmp/wsoutpipe` to receive it.
+
 
 # Command Line Options
 

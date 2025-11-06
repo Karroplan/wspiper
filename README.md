@@ -18,6 +18,7 @@ Websocket connection support ws and wss via OpenSSL.
                                                            /tmp/wsoutpipe ────►
 ``````
 
+
 One can do:
 
 `echo "{ 'message':'Hello, World'}\n" > /tmp/wsinpipe`

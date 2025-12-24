@@ -51,7 +51,7 @@ int g_pipe_sock_to_write[2];
 int g_pipe_read_to_sock[2];
 
 void send_threads_stop() {
-	g_threads_run = false;
+	g_threads_run = 0;
 
 	write(g_ctl_pipe_for_piperead[1], "X", 1);
 	write(g_ctl_pipe_for_pipewrite[1], "X", 1);

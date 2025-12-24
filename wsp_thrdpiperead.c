@@ -67,8 +67,8 @@ int try_open_named_pipe_read(const char* pipe_name)
 		}
 	}
 
-	//fd = open(pipe_name, O_RDONLY | O_NONBLOCK);
-	fd = open(pipe_name, O_RDONLY);
+	fd = open(pipe_name, O_RDONLY | O_NONBLOCK);
+	//fd = open(pipe_name, O_RDONLY);
 	if (fd == -1) return -1;
 
 	int epfd = epoll_create1(0);
@@ -86,6 +86,17 @@ int try_open_named_pipe_read(const char* pipe_name)
 
 		close(epfd);
 		close(fd);
+		return -1;
+	}
+
+	struct epoll_event epevctl = {
+		.events = EPOLLIN,
+		.data.fd = g_ctl_pipe_for_piperead[0]
+	};
+
+	if (epoll_ctl(epfd, EPOLL_CTL_ADD, g_ctl_pipe_for_piperead[0], &epevctl) == -1) {
+		wsp_log(LOG_INFO, "THRDRD errno: %d", errno);
+		close(epfd);
 		return -1;
 	}
 

@@ -359,7 +359,7 @@ int on_ping_timer(wsp_socket* sckt) {
 	read(g_ping_timer_fd, &expirations, sizeof(expirations));
 
 	//printf("SCK: ping sent\n");
-	wsp_log(LOG_INFO, "Sending PING to server.");
+	//wsp_log(LOG_INFO, "Sending PING to server.");
 	ws_send_ping(sckt, NULL, 0, g_settings.timeout);
 
 	return 0;
@@ -444,8 +444,6 @@ int on_ws_sock_read(const wsp_socket* sckt, int pipe_out_fd) {
 			return -1;
 	}
 
-	reset_pong_timer();
-
 	//message received, send it to pipe
 	if (frame_hdr.opcode == OC_TEXT || frame_hdr.opcode == OC_BIN) {
 		//ws_print_body("SCK: ", &frame_body);
@@ -462,6 +460,7 @@ int on_ws_sock_read(const wsp_socket* sckt, int pipe_out_fd) {
 
 	if (frame_hdr.opcode == OC_PONG) {
 		//printf("SCK: RCVD PONG\n");
+		reset_pong_timer();
 	}
 
 	if (frame_hdr.opcode == OC_CONT) {

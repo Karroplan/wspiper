@@ -70,7 +70,7 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
 
             settings->timeout = (int32_t)strtoul(optarg, &endptr, 10);
             if (*endptr != '\0') {
-                wsp_log(LOG_ERR, "Incorrect value for --timeout/-t: %s");
+                wsp_log(LOG_ERR, "Incorrect value for --timeout/-t!");
                 return -1;
             }
             break;
@@ -79,7 +79,7 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
 
             settings->reconnect = (int32_t)strtoul(optarg, &endptr, 10);
             if (*endptr != '\0') {
-                wsp_log(LOG_ERR, "Incorrect value for --reconnect/-r: %s");
+                wsp_log(LOG_ERR, "Incorrect value for --reconnect/-r!");
                 return -1;
             }
             break;
@@ -88,7 +88,7 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
 
             settings->ping_period = (int32_t)strtoul(optarg, &endptr, 10);
             if (*endptr != '\0') {
-                wsp_log(LOG_ERR, "Incorrect value for --ping-period/-p: %s");
+                wsp_log(LOG_ERR, "Incorrect value for --ping-period/-p!");
                 return -1;
             }
             break;
@@ -97,7 +97,7 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
 
             settings->pong_timeout = (int32_t)strtoul(optarg, &endptr, 10);
             if (*endptr != '\0') {
-                wsp_log(LOG_ERR, "Incorrect value for --ping-period/-p: %s");
+                wsp_log(LOG_ERR, "Incorrect value for --ping-period/-p!");
                 return -1;
             }
             break;

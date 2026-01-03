@@ -1,6 +1,6 @@
 /*
  * Non-Commercial Share-Alike Software License (NCSL-1.0)
- * © 2025, Roman Gorkusha / Karroplan
+ * ï¿½ 2025, Roman Gorkusha / Karroplan
  *
  * Permission is granted to use, copy, modify, and share this software
  * for non-commercial purposes only, provided that this notice and the
@@ -292,9 +292,10 @@ ssize_t tcp_read_exact(const wsp_socket* sckt, void* buff, size_t buff_sz, size_
     ssize_t total_read = 0;
 
     while (total_read < buff_sz) {
-        ssize_t rd = 0;
-        rd = tcp_read_nb(sckt, buff + total_read, buff_sz - (size_t)total_read, &rd, timeout_ms);
-        if (rd == -1)
+        ssize_t ret = 0;
+        size_t rd = 0;
+        ret = tcp_read_nb(sckt, buff + total_read, buff_sz - (size_t)total_read, &rd, timeout_ms);
+        if (ret == -1)
             return -1;
 
         total_read += rd;

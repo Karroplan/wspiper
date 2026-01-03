@@ -1,6 +1,6 @@
 /*
  * Non-Commercial Share-Alike Software License (NCSL-1.0)
- * © 2025, Roman Gorkusha / Karroplan
+ * ï¿½ 2025, Roman Gorkusha / Karroplan
  *
  * Permission is granted to use, copy, modify, and share this software
  * for non-commercial purposes only, provided that this notice and the
@@ -175,7 +175,7 @@ int ws_recv_body(const wsp_socket* sckt, ws_frame_header* pws_hdr, ws_frame_body
     if (!pws_bdy->bytes)
         return -1;
 
-    ssize_t rdbytes;
+    size_t rdbytes;
     if (sckt->fn_read_exact(sckt, pws_bdy->bytes, pws_bdy->body_length, &rdbytes, _timeout) == -1)
         return -1;
 
@@ -264,7 +264,7 @@ ssize_t ws_send_message(const wsp_socket* sckt, void* buf, size_t buf_sz, size_t
 
     msg_frame_hdr[1] |= 0x80; //mask bit is set
 
-    ssize_t btssent = 0;
+    size_t btssent = 0;
 
     //send frame header
     sckt->fn_write_exact(sckt, msg_frame_hdr, 2, &btssent, _timeout);
@@ -335,7 +335,7 @@ int ws_send_pong(const wsp_socket* sckt, ws_frame_body* ping_body, int _timeout)
         pong_body_length_8b = htonll(ping_body->body_length);
     }
 
-    ssize_t btssent = 0;
+    size_t btssent = 0;
     sckt->fn_write_exact(sckt, pong_frame_hdr, 2, &btssent, _timeout);
     if (need2b_length) {
         sckt->fn_write_exact(sckt, &pong_body_length_2b, 2, &btssent, _timeout);
@@ -395,7 +395,7 @@ int ws_send_ping(const wsp_socket* sckt, char* msg, ssize_t msg_size, int _timeo
         ping_body_length_8b = htonll((uint64_t)msg_size);
     }
 
-    ssize_t btssent = 0;
+    size_t btssent = 0;
     sckt->fn_write_exact(sckt, ping_frame_hdr, 2, &btssent, _timeout);
     if (need2b_length) {
         sckt->fn_write_exact(sckt, &ping_body_length_2b, 2, &btssent, _timeout);
@@ -428,6 +428,6 @@ int ws_send_ping(const wsp_socket* sckt, char* msg, ssize_t msg_size, int _timeo
 }
 
 int ws_print_body(const char* prefix, const ws_frame_body* pws_bdy) {
-    printf("%s %s\n", prefix, pws_bdy->bytes);
+    printf("%s %s\n", prefix, (char*)pws_bdy->bytes);
     return 0;
 }

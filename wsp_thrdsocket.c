@@ -1,6 +1,6 @@
 /*
  * Non-Commercial Share-Alike Software License (NCSL-1.0)
- * © 2025, Roman Gorkusha / Karroplan
+ * ï¿½ 2025, Roman Gorkusha / Karroplan
  *
  * Permission is granted to use, copy, modify, and share this software
  * for non-commercial purposes only, provided that this notice and the
@@ -165,8 +165,9 @@ int wsp_get_next_addrinfo() {
 }
 
 // opens TCP connection via given addrinfo
+// uses bind_interface name to bind socket if not NULL
 // on success returns connected socket fd
-int connect_tcp_via_addrinf(struct addrinfo* addrinf, uint16_t port, int timeout_ms) {
+int connect_tcp_via_addrinf(struct addrinfo* addrinf, const char* bind_interface_name, uint16_t port, int timeout_ms) {
 	int sockfd = -1;
 
 	if (addrinf->ai_family == AF_INET) {
@@ -181,6 +182,14 @@ int connect_tcp_via_addrinf(struct addrinfo* addrinf, uint16_t port, int timeout
 
 	sockfd = socket(addrinf->ai_family, SOCK_STREAM, 0);
 	if(sockfd == -1) return -1;
+
+	if(bind_interface_name) {
+		if(setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, bind_interface_name, strlen(bind_interface_name)) != 0) {
+			wsp_log(LOG_ERR, "Failed to bind socket to interface %s: %s", bind_interface_name, strerror(errno));
+			close(sockfd);
+			return -1;
+		}
+	}
 
 	set_socket_timeout(sockfd, timeout_ms);
 	if (sockfd == -1) {
@@ -320,7 +329,7 @@ int ws_handshake(const wsp_socket* sck_prms, const char* host, uint16_t port, co
 // then performs WebSocket handshake
 int open_ws_connection() {
 
-	int tcp_socket = connect_tcp_via_addrinf(g_current_addrinfo, g_current_conn_endpoint->port, g_settings.timeout);
+	int tcp_socket = connect_tcp_via_addrinf(g_current_addrinfo, g_current_conn_endpoint->bind_interface, g_current_conn_endpoint->port, g_settings.timeout);
 	if (tcp_socket == -1) return -1;
 
 	g_current_socket.sock = tcp_socket;

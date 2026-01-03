@@ -34,14 +34,15 @@ Then server could respond with `"{ 'response': 'Weclcome fellow Piper!'}"` and o
 
 - `-c`, `--connect`  
   URI list to connect to. List format: `uri1,uri2,uri3,...`  
-  Each URI: `scheme://host[:port][path]`  
+  Each URI: `[iface]scheme://host[:port][path]`
+  - `[iface]`: interface name to bind socket to before connecting, optional, but use square brackets in case you need it. Interface will be used only for current uri
   - `scheme`: `ws` (WebSocket over HTTP) or `wss` (WebSocket over HTTPS)  
   - `host`: FQDN (resolved), IPv4, or `[IPv6]` (IPv6 must be in square brackets per RFC)  
   - `port`: TCP port. If omitted: `wss` → 443, `ws` → 80  
   - `path`: URL path  
 
  **Example:**
-`ws://brain4net.com:888/ui,ws://ya.ru/path1/long/,wss://8.8.8.8/very/long/path,ws://mail.ru:44555/,wss://ya.ru,https://d3.ru/,wss://[2022:BBB:88:2::1]:8866/v6/path`
+`[eth0]ws://brain4net.com:888/ui,ws://ya.ru/path1/long/,wss://8.8.8.8/very/long/path,ws://mail.ru:44555/,wss://ya.ru,https://d3.ru/,wss://[2022:BBB:88:2::1]:8866/v6/path`
 
 *Note:* `https://d3.ru/` will be silently skipped (unknown protocol). Only `ws://` or `wss://` allowed.
 

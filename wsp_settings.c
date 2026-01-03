@@ -1,6 +1,6 @@
 /*
  * Non-Commercial Share-Alike Software License (NCSL-1.0)
- * © 2025, Roman Gorkusha / Karroplan
+ * пїЅ 2025, Roman Gorkusha / Karroplan
  *
  * Permission is granted to use, copy, modify, and share this software
  * for non-commercial purposes only, provided that this notice and the
@@ -161,7 +161,7 @@ char* ws_getHostFromUrl(char* url) {
 
     char* start = scheme_end + 3;
 
-    // find an end of an authority part in url: first occurance / ? # или \0
+    // find an end of an authority part in url: first occurance / ? # or \0
     char* auth_end = start;
     while (*auth_end && *auth_end != '/' && *auth_end != '?' && *auth_end != '#') {
         auth_end++;
@@ -179,7 +179,7 @@ char* ws_getHostFromUrl(char* url) {
         len = (size_t) (host_end - host_start);
     }
     else {
-        // find first : в [start, auth_end)
+        // find first from [start, auth_end)
         char* colon = strchr(start, ':');
         if (colon && colon < auth_end) {
             host_end = colon;
@@ -266,16 +266,16 @@ char* ws_getPathFromUrl(char* url) {
 
     char* start = scheme_end + 3;
 
-    // Найти конец authority: первый / ? # или \0
+    // find end of the  authority: first occurance / ? # or \0
     char* auth_end = start;
     while (*auth_end && *auth_end != '/' && *auth_end != '?' && *auth_end != '#') {
         auth_end++;
     }
 
-    // Если нет / или сразу ?/#, то нет пути
+    // if no / or found ?/#, then path is /
     if (*auth_end != '/') return strdup("/");
 
-    // Путь от auth_end до конца
+    // path from auth_end to end of url
     size_t len = strlen(auth_end);
     char* path = (char*)malloc(len + 1);
     if (!path) return NULL;
@@ -295,7 +295,7 @@ char* ws_getPathFromUrl(char* url) {
 // 
 // ret 0 - ok
 // ret -1 - error
-// Disclaimer: doesn't handle national domains (like .рф, .укр, etc)
+// Disclaimer: doesn't handle national domains (like .пїЅпїЅ, .пїЅпїЅпїЅ, etc)
 int parse_str_to_addrs(char* instr, connect_endpoints** ppce) {
 
     connect_endpoints* start_ce = NULL;

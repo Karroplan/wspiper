@@ -1,6 +1,6 @@
 /*
  * Non-Commercial Share-Alike Software License (NCSL-1.0)
- * © 2025, Roman Gorkusha / Karroplan
+ * ï¿½ 2025, Roman Gorkusha / Karroplan
  *
  * Permission is granted to use, copy, modify, and share this software
  * for non-commercial purposes only, provided that this notice and the
@@ -40,6 +40,7 @@ typedef struct connect_endpoints_t {
     bool secure; // false - ws, true - wss
     char* hostname; //passed via
     char* path;
+    char* bind_interface; // can be NULL
     uint16_t port;
     struct addrinfo* addrinf;
     struct connect_endpoints_t* next;
@@ -102,7 +103,7 @@ char* ws_getPathFromUrl(char* url);
 // 
 // ret 0 - ok
 // ret -1 - error
-// Disclaimer: doesn't handle national domains (like .ðô, .óêð, etc)
+// Disclaimer: doesn't handle national domains (like .ï¿½ï¿½, .ï¿½ï¿½ï¿½, etc)
 int parse_str_to_addrs(char* instr, connect_endpoints** ppce);
 
 int parse_str_to_addrs(char* instr, connect_endpoints** ppci);

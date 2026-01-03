@@ -80,6 +80,9 @@ void free_connect_endpoints(connect_endpoints* ci) {
         free(curr_ci->hostname);
         free(curr_ci->path);
 
+        if(curr_ci->bind_interface)
+            free(curr_ci->bind_interface);
+
         if (!curr_ci->addrinf->ai_next) free(curr_ci->addrinf);
         else freeaddrinfo(curr_ci->addrinf);
 
@@ -106,7 +109,7 @@ char* ws_strgetnexttoken(const char* instr, const char* delim) {
         str++;
     }
 
-    // delimiter not found till end of string
+    // string is empty, or consists only of delimiters
     if (*str == '\0') return NULL;
 
     // Find the end of the token
@@ -133,12 +136,21 @@ char* ws_strgetnexttoken(const char* instr, const char* delim) {
 int ws_urlStartsWithProperProtocol(const char* url, bool* secFlag) {
     if (url == NULL) return -1;
 
-    if (strncmp(url, "ws://", 5) == 0) {
+    //skip [interface] if present
+    const char* curr = url;
+    if (*curr == '[') {
+        curr++; // after [
+        char* end = strchr(curr, ']');
+        if (!end) return -1; // no closing ] found
+        curr = end + 1; // after ]
+    }
+
+    if (strncmp(curr, "ws://", 5) == 0) {
         if (secFlag)
             *secFlag = false;
         return 0;
     }
-    if (strncmp(url, "wss://", 6) == 0) {
+    if (strncmp(curr, "wss://", 6) == 0) {
         if (secFlag)
             *secFlag = true;
         return 0;
@@ -285,12 +297,35 @@ char* ws_getPathFromUrl(char* url) {
     return path;
 }
 
+// allocates new srting, caller must free
+char* ws_getInterfaceNameFromUrl(const char* url) {
+    if (!url) return NULL;
+
+    char* curr = (char*)url;
+    if (*curr != '[') return NULL; // no interface specified
+
+    curr++; // after [
+    char* end = strchr(curr, ']');
+    if (!end) return NULL; // no closing ] found
+
+    size_t len = (size_t)(end - curr);
+    if (len == 0) return NULL; // empty
+    
+    char* if_name = (char*)malloc(len + 1);
+    if (!if_name) return NULL;
+    
+    memcpy(if_name, curr, len);
+    if_name[len] = '\0';
+
+    return if_name;
+}
+
 // v2
 // 
 // 
 // convert instr to chain of connection-endpoints
 // instr example:
-// ws://brain4net.com:888/ui,ws://ya.ru/path1/long/,wss://8.8.8.8/very/long/path,ws://mail.ru:44555/,wss://ya.ru,https://d3.ru/,wss://[2022:BBB:88:2::1]:8866/v6/path,wss://8.8.8.8/very/long/path?with=param1&with2=param2#and_fragment
+// [eth0]ws://brain4net.com:888/ui,[eth1]ws://ya.ru/path1/long/,wss://8.8.8.8/very/long/path,ws://mail.ru:44555/,wss://ya.ru,https://d3.ru/,wss://[2022:BBB:88:2::1]:8866/v6/path,wss://8.8.8.8/very/long/path?with=param1&with2=param2#and_fragment
 //
 // 
 // ret 0 - ok
@@ -317,12 +352,17 @@ int parse_str_to_addrs(char* instr, connect_endpoints** ppce) {
         curr_connendp->path = NULL;
         curr_connendp->addrinf = NULL;
         curr_connendp->hostname = NULL;
+        curr_connendp->bind_interface = NULL;
 
         //check if curr_url starts with ws:// or wss:// and set secure flag
         if (ws_urlStartsWithProperProtocol(curr_url, &curr_connendp->secure) == 0) {
 
-            char* host = ws_getHostFromUrl(curr_url);
+            char* bind_interface = ws_getInterfaceNameFromUrl(curr_url);
+            if(bind_interface) {
+                curr_connendp->bind_interface = bind_interface;
+            }
 
+            char* host = ws_getHostFromUrl(curr_url);
             if (host) {
 
                 curr_connendp->hostname = host;
@@ -358,7 +398,7 @@ int parse_str_to_addrs(char* instr, connect_endpoints** ppce) {
             }
         }
 
-        //check ws/wss failed - free and continue
+        //free and continue
         free(curr_connendp);
         free(curr_url);
     }

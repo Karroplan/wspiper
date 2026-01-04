@@ -285,6 +285,7 @@ ssize_t tcp_read_nb(const wsp_socket* sckt, void* buff, size_t buff_sz, size_t* 
     if (rdbytes == 0)
         return -1; // EOF
 
+    *bytes_read = (size_t)rdbytes;
     return rdbytes;
 }
 
@@ -295,8 +296,10 @@ ssize_t tcp_read_exact(const wsp_socket* sckt, void* buff, size_t buff_sz, size_
         ssize_t ret = 0;
         size_t rd = 0;
         ret = tcp_read_nb(sckt, buff + total_read, buff_sz - (size_t)total_read, &rd, timeout_ms);
-        if (ret == -1)
+        if (ret == -1) {
+            *bytes_read = (size_t)total_read;
             return -1;
+        }
 
         total_read += rd;
     }

@@ -1,6 +1,6 @@
 /*
  * Non-Commercial Share-Alike Software License (NCSL-1.0)
- * © 2025, Roman Gorkusha / Karroplan
+ * ï¿½ 2025, Roman Gorkusha / Karroplan
  *
  * Permission is granted to use, copy, modify, and share this software
  * for non-commercial purposes only, provided that this notice and the
@@ -25,6 +25,23 @@
 #include "wsp_cli.h"
 #include "wsp_settings.h"
 
+int print_help_message() {
+    printf("Usage: wspiper [OPTIONS]\n");
+    printf("Options:\n");
+    printf("  -c, --connect <URI list>       Connection string (required)\n");
+    printf("                                 e.g.,[ifname]ws://server1:port1,wss://server2:port2\n");
+    printf("  -t, --timeout <ms>             Socket read/connect timeout in milliseconds (default: 5000)\n");
+    printf("  -r, --reconnect <ms>           Reconnect delay in milliseconds if connection lost or can't connect (default: 5000)\n");
+    printf("  -p, --ping-period <ms>         Ping period in milliseconds (default: 10000)\n");
+    printf("  -g, --pong-timeout <ms>        Pong timeout in milliseconds (default: 5000)\n");
+    printf("  -n, --no-check-cert            Disable server certificate verification\n");
+    printf("  -o, --out-pipe-name <name>     Name of pipe to write received messages (default: %s)\n", DEF_OUT_PIPE_NAME);
+    printf("  -i, --in-pipe-name <name>      Name of pipe to read messages to send (default: %s)\n", DEF_IN_PIPE_NAME);
+    printf("  -d, --delimiter <string>       Delimiter for messages in input pipe (default: \\n)\n");
+    printf("\n\n");
+    return 0;
+}
+
 int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
 
     static struct option long_options[] = {
@@ -44,7 +61,7 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
     int option_index = 0;
     char* endptr;
 
-    char* _srv_name = NULL;
+    char* conn_str = NULL;
 
     while ((opt = getopt_long(argc, argv, "c:t:r:o:i:n", long_options, &option_index)) != -1) {
 
@@ -54,10 +71,10 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
         switch (opt) {
         case 'c':
             size_t srvlen = strlen(optarg) + 1;
-            _srv_name = malloc(srvlen);
+            conn_str = malloc(srvlen);
 
-            if (_srv_name) {
-                memcpy(_srv_name, optarg, srvlen);
+            if (conn_str) {
+                memcpy(conn_str, optarg, srvlen);
             }
             else {
                 wsp_log(LOG_ERR, "Not enough memory");
@@ -151,12 +168,13 @@ int get_cli_args(int argc, char* argv[], wsp_settings* settings) {
     }
 
 
-    //check required
-    if (_srv_name == NULL) {
+    //check parameters
+    if (conn_str == NULL) {
         wsp_log(LOG_INFO, "--connect <URI list> required\n");
+        print_help_message();
         return -1;
     }
-    settings->connection_string = _srv_name;
+    settings->connection_string = conn_str;
 
     if (!settings->output_pipe_name) {
         settings->output_pipe_name = malloc(strlen(DEF_OUT_PIPE_NAME) + 1);
